@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/alebozek/actual-notes/internal/database"
 	"github.com/alebozek/actual-notes/internal/handlers"
 	"github.com/alebozek/actual-notes/internal/middleware"
@@ -8,6 +10,8 @@ import (
 )
 
 func main() {
+	handlers.DOMAIN = os.Getenv("DOMAIN")
+
 	database.InitDB()
 	router := gin.Default()
 	router.Use(gin.Recovery())
@@ -15,9 +19,8 @@ func main() {
 	router.Static("/static", "static/")
 	router.LoadHTMLGlob("internal/templates/*")
 
-	router.GET("/login", func(ctx *gin.Context) {
-		ctx.JSON(403, "Page unavailable yet.")
-	})
+	router.GET("/login", handlers.LoginPage())
+	router.POST("/login", handlers.Login())
 
 	router.GET("/register", handlers.RegisterPage())
 	router.POST("/register", handlers.Register())

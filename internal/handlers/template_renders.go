@@ -8,6 +8,12 @@ import (
 
 func RegisterPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.HTML(http.StatusOK, "register.html", gin.H{"title": "Register"})
+		c.HTML(http.StatusOK, "register.html", gin.H{})
+	}
+}
+
+func LoginPage() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.HTML(http.StatusOK, "login.html", gin.H{})
 	}
 }
